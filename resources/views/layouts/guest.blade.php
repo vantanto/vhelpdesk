@@ -46,6 +46,7 @@
 
     <script src="{{ asset('dist/js/volt/volt.js') }}"></script>
 
+    @stack('scripts')
 </body>
 
 </html>
