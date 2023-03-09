@@ -15,7 +15,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $pshow = is_numeric($request->pshow) ? $request->pshow : Helper::$PageItemShows[0];
-        $users = User::orderBy('id', 'asc');
+        $users = User::with('departments')->orderBy('id', 'asc');
         $departments = Department::all();
 
         if ($request->search != null) {

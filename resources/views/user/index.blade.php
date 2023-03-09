@@ -34,6 +34,7 @@
                             <th class="border-0 rounded-start">#</th>
                             <th class="border-0">Name</th>
                             <th class="border-0">Email</th>
+                            <th class="border-0">Department</th>
                             <th class="border-0">Registered</th>
                             <th class="border-0 rounded-end">Action</th>
                         </tr>
@@ -44,6 +45,11 @@
                                 <td>{{ $loop->iteration + $users->firstItem() - 1 }}</td>
                                 <td>{{ $user->name }}</td>
                                 <td>{{ $user->email }}</td>
+                                <td>
+                                    @foreach ($user->departments as $department)
+                                        {{ $department->name }} <br>
+                                    @endforeach
+                                </td>
                                 <td>{{ $user->created_at->format('Y-m-d') }}</td>
                                 <td>
                                     <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning btn-sm mb-1">Edit</a>
