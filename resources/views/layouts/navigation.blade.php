@@ -15,7 +15,7 @@
             <div class="user-card d-flex d-md-none align-items-center justify-content-between justify-content-md-center pb-4">
                 <div class="d-flex align-items-center">
                     <div class="avatar-lg me-4">
-                        <img src="{{ asset('dist/images/avatar.png') }}" class="card-img-top rounded-circle border-white">
+                        <img src="{{ Auth::user()->avatar_full_url }}" class="card-img-top rounded-circle border-white">
                     </div>
                     <div class="d-block">
                         <h2 class="h5 mb-3">Hi, {{ Auth::user()->name }}</h2>
