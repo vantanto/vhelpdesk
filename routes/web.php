@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
@@ -17,6 +18,21 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::view('/', 'dashboard')->name('dashboard');
+
+    Route::group(['prefix' => 'departments'], function() {
+        Route::get('/', [DepartmentController::class, 'index'])
+            ->name('departments.index');
+        Route::get('/create', [DepartmentController::class, 'create'])
+            ->name('departments.create');
+        Route::post('/store', [DepartmentController::class, 'store'])
+            ->name('departments.store');
+        Route::get('/edit/{id}', [DepartmentController::class, 'edit'])
+            ->name('departments.edit');
+        Route::post('/update/{id}', [DepartmentController::class, 'update'])
+            ->name('departments.update');
+        Route::post('/destroy{id}', [DepartmentController::class, 'destroy'])
+            ->name('departments.destroy');
+    });
 
     Route::group(['prefix' => 'users'], function() {
         Route::get('/', [UserController::class, 'index'])

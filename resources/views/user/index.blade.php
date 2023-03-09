@@ -9,7 +9,21 @@
         </x-slot>
     </x-slot>
 
-    <x-form-filter/>
+    <x-form-filter search_placeholder="Search name, email">
+        <x-slot name="slot_top">
+            <div class="col-md-4">
+                <label>Department</label>
+                <select class="form-select" name="department">
+                    <option value="" selected>All Department</option>
+                    @foreach ($departments as $department)
+                        <option value="{{ $department->id }}">
+                            {{ $department->name }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </x-slot>
+    </x-form-filter>
 
     <div class="card border-0 shadow">
         <div class="card-body">

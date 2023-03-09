@@ -35,6 +35,17 @@
                     </div>
                 </div>
             </div>
+            <div class="mb-3">
+                <label for="department">Department <small class="text-muted">(Optional) (Multiple)</small></label>
+                <select id="department" name="departments[]" class="form-select" multiple>
+                    @foreach ($departments as $department)
+                        <option value="{{ $department->id }}">
+                            {{ $department->name }}
+                        </option>
+                    @endforeach
+                </select>
+                <x-invalid-feedback />
+            </div>
             <div class="mt-3">
                 <button tpye="submit" id="mainFormBtn" class="btn btn-gray-800 mt-2 animate-up-2">Submit</button>
             </div>
@@ -43,5 +54,8 @@
 
     @push('scripts')
     <script>mainFormSubmit();</script>
+    <script>
+        $("#department").select2();
+    </script>
     @endpush
 </x-app-layout>

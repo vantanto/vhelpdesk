@@ -44,9 +44,14 @@ function submitForm(mainForm, mainFormData, mainFormBtn) {
                 if (data.responseJSON.status == 'validator') {
                     var alert_error_list = '';
                     $.each(data.responseJSON.msg, function(index, value) {
-                        mainForm.find("[name='" + index + "']").addClass("is-invalid")
-                        mainForm.find("[name='" + index + "']").siblings(".invalid-feedback").text(value[0])
-                        alert_error_list += "<li>" + value[0] + "</li>";
+                        if (index.includes('.')) {
+                            mainForm.find("[name='" + index.split('.')[0] + "[]']").addClass("is-invalid")
+                            mainForm.find("[name='" + index.split('.')[0] + "[]']").siblings(".invalid-feedback").text(value[0])
+                        } else {
+                            mainForm.find("[name='" + index + "']").addClass("is-invalid")
+                            mainForm.find("[name='" + index + "']").siblings(".invalid-feedback").text(value[0])
+                            alert_error_list += "<li>" + value[0] + "</li>";
+                        }
                     });
                     swalAlert('error', 'Input Error!');
                     $("#alert_error").show();

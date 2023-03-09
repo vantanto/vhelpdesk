@@ -56,7 +56,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    @php $navUser = Request::routeIs(['users.*']); @endphp
+                    @php $navUser = Request::routeIs(['departments.*', 'users.*']); @endphp
                     <span class="nav-link @if(!$navUser) collapsed @endif d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#nav-user" aria-expanded="{{ $navUser ? 'true' : 'false' }}">
                         <span>
                             <span class="sidebar-icon">
@@ -71,6 +71,13 @@
                         </span>
                     </span>
                     <div class="multi-level collapse @if($navUser) show @endif" role="list" id="nav-user" aria-expanded="{{ $navUser ? 'true' : 'false' }}">
+                        <ul class="flex-column nav">
+                            <li class="nav-item @if(Request::routeIs('departments.index')) active @endif">
+                                <a class="nav-link" href="{{ route('departments.index') }}">
+                                    List Department
+                                </a>
+                            </li>
+                        </ul>
                         <ul class="flex-column nav">
                             <li class="nav-item @if(Request::routeIs('users.index')) active @endif">
                                 <a class="nav-link" href="{{ route('users.index') }}">

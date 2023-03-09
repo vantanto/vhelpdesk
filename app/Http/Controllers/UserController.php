@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\Helper;
+use App\Models\Department;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -15,31 +16,39 @@ class UserController extends Controller
     {
         $pshow = is_numeric($request->pshow) ? $request->pshow : Helper::$PageItemShows[0];
         $users = User::orderBy('id', 'asc');
+        $departments = Department::all();
 
         if ($request->search != null) {
             $users->where(
                 fn ($query) =>
-                $query->where('name', 'like', '%'.$request->search.'%')
-                    ->orWhere('email', 'like', '%'.$request->search.'%')
+                $query->where('name', 'like', '%' . $request->search . '%')
+                    ->orWhere('email', 'like', '%' . $request->search . '%')
+            );
+        }
+        if ($request->department != null) {
+            $users->whereHas(
+                'departments',
+                fn ($query) => $query->where('departments.id', $request->department)
             );
         }
 
         $users = $users->paginate($pshow);
-        return view('user.index', compact('users'));
+        return view('user.index', compact('users', 'departments'));
     }
 
     public function create()
     {
-        return view('user.create');
+        $departments = Department::all();
+        return view('user.create', compact('departments'));
     }
-    
+
     public function store(Request $request)
     {
-        sleep(5);
         $validator = \Validator::make($request->all(), [
             'name' => 'required|string',
             'email' => 'required|unique:users,email',
             'password' => ['required', Password::defaults(), 'confirmed'],
+            'departments.*' => 'nullable|distinct|exists:departments,id',
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
@@ -52,6 +61,9 @@ class UserController extends Controller
             $user->email_verified_at = now();
             $user->password = Hash::make($request->password);
             $user->save();
+
+            if ($request->departments != null) $user->departments()->attach($request->departments);
+
             DB::commit();
             return response()->json(['status' => 'success', 'msg' => 'User Successfully Created.']);
         } catch (\Throwable $ex) {
@@ -62,8 +74,9 @@ class UserController extends Controller
 
     public function edit(Request $request, $id)
     {
-        $user = User::findOrFail($id);
-        return view('user.edit', compact('user'));
+        $user = User::with('departments')->findOrFail($id);
+        $departments = Department::all();
+        return view('user.edit', compact('user', 'departments'));
     }
 
     public function update(Request $request, $id)
@@ -72,6 +85,7 @@ class UserController extends Controller
         $validator = \Validator::make($request->all(), [
             'name' => 'required|string',
             'password' => ['nullable', Password::defaults(), 'confirmed'],
+            'departments.*' => 'nullable|distinct|exists:departments,id',
         ]);
         if ($validator->fails()) {
             return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
@@ -80,10 +94,13 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
             $user->fill($request->only('name'));
-            if($request->password != null) $user->password = Hash::make($request->password);
+            if ($request->password != null) $user->password = Hash::make($request->password);
             $user->save();
+
+            if ($request->departments != null) $user->departments()->sync($request->departments);
+
             DB::commit();
-    
+
             return response()->json(['status' => 'success', 'msg' => 'User Successfully Updated.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
