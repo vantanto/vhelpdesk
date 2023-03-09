@@ -11,6 +11,10 @@
                     <div class="signin-inner my-3 my-lg-0 bg-white shadow border-0 rounded p-4 p-lg-5 w-100 fmxw-500">
                         <h1 class="h3">Forgot your password?</h1>
                         <p class="mb-4">No problem. Just let us know your email address and we will email you a password reset link that will allow you to choose a new one.</p>
+
+                        <!-- Session Status -->
+                        <x-auth-session-status class="mb-4" :status="session('status')" />
+                        
                         <form method="POST" action="{{ route('password.email') }}">
                             @csrf
                             <div class="mb-4">
