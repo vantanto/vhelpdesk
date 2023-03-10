@@ -56,13 +56,45 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    @php $navUser = Request::routeIs(['departments.*', 'users.*']); @endphp
+                    @php $navMasterData = Request::routeIs(['categories.*']); @endphp
+                    <span class="nav-link @if(!$navMasterData) collapsed @endif d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#nav-master-data" aria-expanded="{{ $navMasterData ? 'true' : 'false' }}">
+                        <span>
+                            <span class="sidebar-icon">
+                                <svg class="icon icon-xs me-2" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512"><!--! Font Awesome Pro 6.3.0 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license (Commercial License) Copyright 2023 Fonticons, Inc. --><path fill="currentColor" d="M0 96C0 60.7 28.7 32 64 32H448c35.3 0 64 28.7 64 64V416c0 35.3-28.7 64-64 64H64c-35.3 0-64-28.7-64-64V96zm64 0v64h64V96H64zm384 0H192v64H448V96zM64 224v64h64V224H64zm384 0H192v64H448V224zM64 352v64h64V352H64zm384 0H192v64H448V352z"/></svg>
+                            </span>
+                            <span class="sidebar-text">Master Data</span>
+                        </span>
+                        <span class="link-arrow">
+                            <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd"></path>
+                            </svg>
+                        </span>
+                    </span>
+                    <div class="multi-level collapse @if($navMasterData) show @endif" role="list" id="nav-master-data" aria-expanded="{{ $navMasterData ? 'true' : 'false' }}">
+                        <ul class="flex-column nav">
+                            <li class="nav-item @if(Request::routeIs('categories.index')) active @endif">
+                                <a class="nav-link" href="{{ route('categories.index') }}">
+                                    Category
+                                </a>
+                            </li>
+                        </ul>
+                        <ul class="flex-column nav">
+                            <li class="nav-item @if(Request::routeIs('departments.index')) active @endif">
+                                <a class="nav-link" href="{{ route('departments.index') }}">
+                                    Department
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    @php $navUser = Request::routeIs(['users.*']); @endphp
                     <span class="nav-link @if(!$navUser) collapsed @endif d-flex justify-content-between align-items-center" data-bs-toggle="collapse" data-bs-target="#nav-user" aria-expanded="{{ $navUser ? 'true' : 'false' }}">
                         <span>
                             <span class="sidebar-icon">
                                 <svg class="icon icon-xs me-2" fill="currentColor" viewBox="0 0 1024 1024" xmlns="http://www.w3.org/2000/svg"><path fill="currentColor" d="M288 320a224 224 0 1 0 448 0 224 224 0 1 0-448 0zm544 608H160a32 32 0 0 1-32-32v-96a160 160 0 0 1 160-160h448a160 160 0 0 1 160 160v96a32 32 0 0 1-32 32z"/></svg>
                             </span>
-                            <span class="sidebar-text">User</span>
+                            <span class="sidebar-text">Master User</span>
                         </span>
                         <span class="link-arrow">
                             <svg class="icon icon-sm" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
@@ -72,16 +104,9 @@
                     </span>
                     <div class="multi-level collapse @if($navUser) show @endif" role="list" id="nav-user" aria-expanded="{{ $navUser ? 'true' : 'false' }}">
                         <ul class="flex-column nav">
-                            <li class="nav-item @if(Request::routeIs('departments.index')) active @endif">
-                                <a class="nav-link" href="{{ route('departments.index') }}">
-                                    List Department
-                                </a>
-                            </li>
-                        </ul>
-                        <ul class="flex-column nav">
                             <li class="nav-item @if(Request::routeIs('users.index')) active @endif">
                                 <a class="nav-link" href="{{ route('users.index') }}">
-                                    List User
+                                    User
                                 </a>
                             </li>
                         </ul>
