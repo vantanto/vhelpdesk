@@ -18,5 +18,7 @@ class DepartmentsSeeder extends Seeder
                 'name' => $department
             ]);
         }
+
+        \App\Models\User::find(1)->departments()->attach(1);
     }
 }

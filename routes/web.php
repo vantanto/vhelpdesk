@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\AssignedController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\DepartmentController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -50,6 +52,32 @@ Route::middleware('auth')->group(function () {
             ->name('departments.destroy');
     });
 
+    Route::group(['prefix' => 'tickets'], function() {
+        Route::get('/', [TicketController::class, 'index'])
+            ->name('tickets.index');
+        Route::get('/create', [TicketController::class, 'create'])
+            ->name('tickets.create');
+        Route::post('/store', [TicketController::class, 'store'])
+            ->name('tickets.store');
+        Route::get('/detail', [TicketController::class, 'detail'])
+            ->name('tickets.detail');
+        Route::get('/show/{code}', [TicketController::class, 'show'])
+            ->name('tickets.show');
+        Route::get('/edit/{code}', [TicketController::class, 'edit'])
+            ->name('tickets.edit');
+        Route::post('/update/{code}', [TicketController::class, 'update'])
+            ->name('tickets.update');
+        Route::post('/destroy/{code}', [TicketController::class, 'destroy'])
+            ->name('tickets.destroy');
+        Route::post('/status/update/{code}', [TicketController::class, 'statusUpdate'])
+            ->name('tickets.status.update');
+
+        Route::group(['prefix' => 'assigneds'], function() {
+            Route::post('/update/{code}', [AssignedController::class, 'update'])
+                ->name('assigneds.update');
+        });
+    });
+
     Route::group(['prefix' => 'users'], function() {
         Route::get('/', [UserController::class, 'index'])
             ->name('users.index');
@@ -57,6 +85,8 @@ Route::middleware('auth')->group(function () {
             ->name('users.create');
         Route::post('/store', [UserController::class, 'store'])
             ->name('users.store');
+        Route::get('/detail', [UserController::class, 'detail'])
+            ->name('users.detail');
         Route::get('/edit/{id}', [UserController::class, 'edit'])
             ->name('users.edit');
         Route::post('/update/{id}', [UserController::class, 'update'])

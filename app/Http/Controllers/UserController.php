@@ -72,6 +72,15 @@ class UserController extends Controller
         }
     }
 
+    public function detail(Request $request)
+    {
+        $user = User::find($request->id);
+        if ($user) {
+            return response()->json(['status' => 'success', 'msg' => 'Data Found.', 'data' => $user]);
+        }
+        return response()->json(['status' => 'error', 'msg' => 'No Data Found.'], 404);
+    }
+
     public function edit(Request $request, $id)
     {
         $user = User::with('departments')->findOrFail($id);
@@ -97,7 +106,7 @@ class UserController extends Controller
             if ($request->password != null) $user->password = Hash::make($request->password);
             $user->save();
 
-            if ($request->departments != null) $user->departments()->sync($request->departments);
+            $user->departments()->sync($request->departments);
 
             DB::commit();
 

@@ -62,6 +62,11 @@ class User extends Authenticatable
         );
     }
 
+    public function assigneds()
+    {
+        return $this->belongsToMany(Ticket::class, 'assigneds');
+    }
+
     public function departments()
     {
         return $this->belongsToMany(Department::class);

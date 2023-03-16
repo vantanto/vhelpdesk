@@ -145,3 +145,9 @@ function rtrim (str, charlist) {
     const re = new RegExp('[' + charlist + ']+$', 'g')
     return (str + '').replace(re, '')
 }
+
+function ucwords (str) {
+    return (str + '').replace(/^([a-z])|\s+([a-z])/g, function ($1) {
+        return $1.toUpperCase();
+    });
+}

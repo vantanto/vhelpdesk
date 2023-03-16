@@ -57,6 +57,8 @@
             @endisset
             
             {{ $slot }}
+
+            @stack('modals')
         </div>
 
         <footer class="bg-white rounded shadow p-2 mt-auto">
@@ -85,6 +87,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/notyf/3.10.0/notyf.min.js" integrity="sha512-467grL09I/ffq86LVdwDzi86uaxuAhFZyjC99D6CC1vghMp1YAs+DqCgRvhEtZIKX+o9lR0F2bro6qniyeCMEQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/simplebar/6.2.1/simplebar.min.js" integrity="sha512-pnw039YCj58sPbPxVAzem8Z3dTgRgq0n6QJZDc+3PV2ScytsX6Jx0pMiLZRYofXshu4ChX6/rFFgebHQtK4UoA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.1.0-rc.0/js/select2.min.js" integrity="sha512-4MvcHwcbqXKUHB6Lx3Zb5CEAVoE9u84qN+ZSMM6s7z8IeJriExrV3ND5zRze9mxNlABJ6k864P/Vl8m0Sd3DtQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.13.0/moment.min.js" integrity="sha512-Ff5AdoHz3vQThC2scsjxohVP7viZvTzrYjJCgEuvOinHOa5xrYk7vPumK1n721HpJ7W5aqHFt+8Ptv9HwMf7tA==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 
     <script src="{{ asset('dist/vendor/onscreen/dist/on-screen.umd.min.js') }}"></script>
     <script src="{{ asset('dist/vendor/smooth-scroll/dist/smooth-scroll.polyfills.min.js') }}"></script>

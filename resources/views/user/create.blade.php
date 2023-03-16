@@ -5,39 +5,31 @@
             @csrf
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <div>
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required>
-                        <x-invalid-feedback />
-                    </div>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" required>
+                    <x-invalid-feedback />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <div>
-                        <label for="email">Email</label>
-                        <input type="email" id="email" name="email" class="form-control" required>
-                        <x-invalid-feedback />
-                    </div>
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                    <x-invalid-feedback />
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <div>
-                        <label for="password">Password</label>
-                        <input type="password" id="password" name="password" class="form-control" required>
-                        <x-invalid-feedback />
-                    </div>
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                    <x-invalid-feedback />
                 </div>
                 <div class="col-md-6 mb-3">
-                    <div>
-                        <label for="password_confirmation">Confirm Password</label>
-                        <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
-                        <x-invalid-feedback />
-                    </div>
+                    <label for="password_confirmation">Confirm Password</label>
+                    <input type="password" id="password_confirmation" name="password_confirmation" class="form-control" required>
+                    <x-invalid-feedback />
                 </div>
             </div>
             <div class="mb-3">
                 <label for="department">Department <small class="text-muted">(Optional) (Multiple)</small></label>
-                <select id="department" name="departments[]" class="form-select" multiple>
+                <select id="department" name="departments[]" class="form-select" multiple style="width: 100%">
                     @foreach ($departments as $department)
                         <option value="{{ $department->id }}">
                             {{ $department->name }}

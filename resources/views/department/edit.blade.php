@@ -5,11 +5,9 @@
             @csrf
             <div class="row">
                 <div class="col-md-6 mb-3">
-                    <div>
-                        <label for="name">Name</label>
-                        <input type="text" id="name" name="name" class="form-control" required value="{{ $department->name }}">
-                        <x-invalid-feedback />
-                    </div>
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" required value="{{ $department->name }}">
+                    <x-invalid-feedback />
                 </div>
             </div>
             <div class="mt-3">
