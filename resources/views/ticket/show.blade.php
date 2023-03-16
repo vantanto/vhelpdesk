@@ -125,7 +125,7 @@
                             <x-invalid-feedback />
                         </div>
                         <div class="mt-3">
-                            <button tpye="submit" id="mainFormBtn" class="btn btn-gray-800 mt-2 animate-up-2">Submit</button>
+                            <button type="submit" id="mainFormBtn" class="btn btn-gray-800 mt-2 animate-up-2">Submit</button>
                         </div>
                     </form>
                 </x-slot>
@@ -141,7 +141,7 @@
                         <input type="hidden" id="status" name="status" value="">
                         <x-invalid-feedback />
                         <div>
-                            <button tpye="submit" id="mainFormBtnStatus" class="btn btn-gray-800 mt-2 animate-up-2">
+                            <button type="submit" id="mainFormBtnStatus" class="btn btn-gray-800 mt-2 animate-up-2">
                                 Yes
                             </button>
                             <button type="button" class="btn btn-link text-gray-600 ms-auto" data-bs-dismiss="modal">

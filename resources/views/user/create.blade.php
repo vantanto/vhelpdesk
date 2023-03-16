@@ -39,7 +39,7 @@
                 <x-invalid-feedback />
             </div>
             <div class="mt-3">
-                <button tpye="submit" id="mainFormBtn" class="btn btn-gray-800 mt-2 animate-up-2">Submit</button>
+                <button type="submit" id="mainFormBtn" class="btn btn-gray-800 mt-2 animate-up-2">Submit</button>
             </div>
         </form>
     </div>
