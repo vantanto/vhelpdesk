@@ -66,15 +66,20 @@
                 </div>
                 <div class="text-center">
                     @can('departments', $ticket)
-                        @if($ticket->statu == 'waiting')
-                            <button type="button" class="btn-status-update btn btn-primary m-2 mb-1"
+                        @if($ticket->status == 'waiting')
+                            <button type="button" class="btn-status-update btn bg-purple text-white m-2 mb-1"
                                 value="in_progress">
                                 Process
+                            </button>
+                        @elseif($ticket->status == 'in_progress')
+                            <button type="button" class="btn-status-update btn btn-success text-white m-2 mb-1"
+                                value="done">
+                                Complete
                             </button>
                         @endif
                     @endcan
                     @can('user', $ticket)
-                        @if($ticket->status == 'waiting') 
+                        @if($ticket->status == 'waiting' || $ticket->status == 'in_progress') 
                             <button type="button" class="btn-status-update btn btn-danger m-2 mb-1"
                                 value="cancelled">
                                 Cancel
@@ -164,6 +169,8 @@
                     title = 'Are you sure to PROCESS this ticket?';
                 } else if (status == 'cancelled') {
                     title = 'Are you sure to CANCEL this ticket?';
+                } else if (status == 'done') {
+                    title = 'Are you sure to COMPLETE this ticket?';
                 }
 
                 if (title != '') {
