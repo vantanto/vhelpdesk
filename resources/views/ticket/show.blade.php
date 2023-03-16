@@ -1,7 +1,4 @@
 <x-app-layout>
-    @php
-        $canAssignedUsers = !in_array($ticket->status, ['done', 'cancelled']) ;
-    @endphp
     <div class="row">
         <div class="col-md-7">
             <div class="card card-body border-0 shadow">
@@ -91,12 +88,12 @@
             <div class="card card-body border-0 shadow">
                 <div class="d-flex justify-content-between align-items-center">
                     <h2 class="h6 mb-3 text-center">Assigned Users</h2>
-                    @if ($canAssignedUsers)
+                    @can('assignUser', $ticket)
                         <button class="btn btn-warning btn-icon-only btn-sm"
                             data-bs-toggle="modal" data-bs-target="#modal-assigned">
                             <i class="fa-solid fa-edit"></i>
                         </button>
-                    @endif
+                    @endcan
                 </div>
                 <div>
                     @foreach ($ticket->assigneds as $assigned)
@@ -108,7 +105,7 @@
     </div>
 
     @push('modals')
-        @if($canAssignedUsers)
+        @can('assignUser', $ticket)
             <x-modal.modal :id="'modal-assigned'" :title="'Edit Assigned Users'">
                 <x-slot name="body">
                     <form id="mainForm" method="POST" action="{{ route('assigneds.update', $ticket->code) }}">
@@ -130,7 +127,7 @@
                     </form>
                 </x-slot>
             </x-modal.modal>
-        @endif
+        @endcan
 
         <x-modal.modal :id="'modal-status-update'" :title="'Edit Status'" :modal_class="'modal-dialog-centered'">
             <x-slot name="body">

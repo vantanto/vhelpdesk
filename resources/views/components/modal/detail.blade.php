@@ -23,7 +23,7 @@
                     success: pSuccess,
                     error: function(result, textStatus, jqXHR) {
                         if (typeof result.responseJSON !== 'undefined' && typeof result.responseJSON.status !== 'undefined') {
-                            swalAlert('error', result.responseJSON.msg);
+                            swalAlert('error', result.responseJSON.message);
                         } else {
                             swalAlert('error', 'Error!');
                         }

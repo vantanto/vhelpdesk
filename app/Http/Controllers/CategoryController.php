@@ -36,7 +36,7 @@ class CategoryController extends Controller
             'name' => 'required|string',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -45,10 +45,10 @@ class CategoryController extends Controller
             $category->fill($request->only('name'));
             $category->save();
             DB::commit();
-            return response()->json(['status' => 'success', 'msg' => 'Category Successfully Created.']);
+            return response()->json(['status' => 'success', 'message' => 'Category Successfully Created.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'Category Failed Created.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Category Failed Created.', 'data' => $ex->getMessage()], 500);
         }
     }
 
@@ -65,7 +65,7 @@ class CategoryController extends Controller
             'name' => 'required|string',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -74,10 +74,10 @@ class CategoryController extends Controller
             $category->save();
             DB::commit();
     
-            return response()->json(['status' => 'success', 'msg' => 'Category Successfully Updated.']);
+            return response()->json(['status' => 'success', 'message' => 'Category Successfully Updated.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'Category Failed Updated.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Category Failed Updated.', 'data' => $ex->getMessage()], 500);
         }
     }
 

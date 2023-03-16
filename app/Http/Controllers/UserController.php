@@ -51,7 +51,7 @@ class UserController extends Controller
             'departments.*' => 'nullable|distinct|exists:departments,id',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -65,10 +65,10 @@ class UserController extends Controller
             if ($request->departments != null) $user->departments()->attach($request->departments);
 
             DB::commit();
-            return response()->json(['status' => 'success', 'msg' => 'User Successfully Created.']);
+            return response()->json(['status' => 'success', 'message' => 'User Successfully Created.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'User Failed Created.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'User Failed Created.', 'data' => $ex->getMessage()], 500);
         }
     }
 
@@ -76,9 +76,9 @@ class UserController extends Controller
     {
         $user = User::find($request->id);
         if ($user) {
-            return response()->json(['status' => 'success', 'msg' => 'Data Found.', 'data' => $user]);
+            return response()->json(['status' => 'success', 'message' => 'Data Found.', 'data' => $user]);
         }
-        return response()->json(['status' => 'error', 'msg' => 'No Data Found.'], 404);
+        return response()->json(['status' => 'error', 'message' => 'No Data Found.'], 404);
     }
 
     public function edit(Request $request, $id)
@@ -97,7 +97,7 @@ class UserController extends Controller
             'departments.*' => 'nullable|distinct|exists:departments,id',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -110,10 +110,10 @@ class UserController extends Controller
 
             DB::commit();
 
-            return response()->json(['status' => 'success', 'msg' => 'User Successfully Updated.']);
+            return response()->json(['status' => 'success', 'message' => 'User Successfully Updated.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'User Failed Updated.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'User Failed Updated.', 'data' => $ex->getMessage()], 500);
         }
     }
 

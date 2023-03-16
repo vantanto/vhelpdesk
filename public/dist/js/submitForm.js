@@ -34,16 +34,16 @@ function submitForm(mainForm, mainFormData, mainFormBtn) {
         },
         success: function(data, textStatus, jqXHR) {
             if (data.status == "success") {
-                swalAlert('success', data.msg).then(() => {
+                swalAlert('success', data.message).then(() => {
                     window.location.href = data.href ?? $('meta[name="url-current"]').attr('content')
                 });
             }
         },
         error: function(data, textStatus, jqXHR) {
-            if (typeof data.responseJSON !== 'undefined' && typeof data.responseJSON.status !== 'undefined') {
+            if ((typeof data.responseJSON !== 'undefined' && typeof data.responseJSON.status !== 'undefined') || typeof data.responseJSON.message != 'undefined') {
                 if (data.responseJSON.status == 'validator') {
                     var alert_error_list = '';
-                    $.each(data.responseJSON.msg, function(index, value) {
+                    $.each(data.responseJSON.message, function(index, value) {
                         if (index.includes('.')) {
                             mainForm.find("[name='" + index.split('.')[0] + "[]']").addClass("is-invalid")
                             mainForm.find("[name='" + index.split('.')[0] + "[]']").siblings(".invalid-feedback").text(value[0])
@@ -58,8 +58,8 @@ function submitForm(mainForm, mainFormData, mainFormBtn) {
                     $("#alert_error_list").html(alert_error_list);
                 } else {
                     $("#alert_error").show();
-                    $("#alert_error_msg").html(data.responseJSON.msg);
-                    swalAlert('error', data.responseJSON.msg);
+                    $("#alert_error_msg").html(data.responseJSON.message);
+                    swalAlert('error', data.responseJSON.message);
                 }
             } else
                 swalAlert('error', 'Error!');

@@ -36,7 +36,7 @@ class DepartmentController extends Controller
             'name' => 'required|string',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -45,10 +45,10 @@ class DepartmentController extends Controller
             $department->fill($request->only('name'));
             $department->save();
             DB::commit();
-            return response()->json(['status' => 'success', 'msg' => 'Department Successfully Created.']);
+            return response()->json(['status' => 'success', 'message' => 'Department Successfully Created.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'Department Failed Created.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Department Failed Created.', 'data' => $ex->getMessage()], 500);
         }
     }
 
@@ -65,7 +65,7 @@ class DepartmentController extends Controller
             'name' => 'required|string',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -74,10 +74,10 @@ class DepartmentController extends Controller
             $department->save();
             DB::commit();
     
-            return response()->json(['status' => 'success', 'msg' => 'Department Successfully Updated.']);
+            return response()->json(['status' => 'success', 'message' => 'Department Successfully Updated.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'Department Failed Updated.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Department Failed Updated.', 'data' => $ex->getMessage()], 500);
         }
     }
 

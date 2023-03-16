@@ -15,6 +15,11 @@ class TicketPolicy
         //
     }
 
+    public function assignUser(User $user, Ticket $ticket): bool
+    {
+        return in_array($ticket->status, [Ticket::$Status[0], Ticket::$Status[1]]);
+    }
+
     public function user(User $user, Ticket $ticket): bool
     {
         return $user->id == $ticket->user_id;

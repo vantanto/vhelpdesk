@@ -63,7 +63,7 @@ class TicketController extends Controller
             'departments.*' => 'nullable|distinct|exists:departments,id',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -80,10 +80,10 @@ class TicketController extends Controller
             $ticket->code = $ticket->generateCode();
             $ticket->save();
             DB::commit();
-            return response()->json(['status' => 'success', 'msg' => 'Ticket Successfully Created.']);
+            return response()->json(['status' => 'success', 'message' => 'Ticket Successfully Created.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'Ticket Failed Created.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Ticket Failed Created.', 'data' => $ex->getMessage()], 500);
         }
     }
 
@@ -93,9 +93,9 @@ class TicketController extends Controller
             ->detail()
             ->where('code', $request->code)->first();
         if ($ticket) {
-            return response()->json(['status' => 'success', 'msg' => 'Data Found.', 'data' => $ticket]);
+            return response()->json(['status' => 'success', 'message' => 'Data Found.', 'data' => $ticket]);
         }
-        return response()->json(['status' => 'error', 'msg' => 'No Data Found.'], 404);
+        return response()->json(['status' => 'error', 'message' => 'No Data Found.'], 404);
     }
 
     public function show(Request $request, $code)
@@ -132,7 +132,7 @@ class TicketController extends Controller
             'departments.*' => 'nullable|distinct|exists:departments,id',
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -147,10 +147,10 @@ class TicketController extends Controller
             $ticket->files = Helper::fileUpdateMultiple($ticket->files, $request->files_delete, $request->file('files'), Ticket::$FilePath . $ticket->id . '/');
             $ticket->save();
             DB::commit();
-            return response()->json(['status' => 'success', 'msg' => 'Ticket Successfully Updated.']);
+            return response()->json(['status' => 'success', 'message' => 'Ticket Successfully Updated.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'Ticket Failed Updated.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Ticket Failed Updated.', 'data' => $ex->getMessage()], 500);
         }
     }
 
@@ -168,7 +168,7 @@ class TicketController extends Controller
             'status' => ['required', Rule::in(Ticket::$Status)],
         ]);
         if ($validator->fails()) {
-            return response()->json(['status' => 'validator', 'msg' => $validator->messages()], 400);
+            return response()->json(['status' => 'validator', 'message' => $validator->messages()], 400);
         }
 
         DB::beginTransaction();
@@ -176,10 +176,10 @@ class TicketController extends Controller
             $ticket->status = $request->status;
             $ticket->save();
             DB::commit();
-            return response()->json(['status' => 'success', 'msg' => 'Ticket Status Successfully Updated.']);
+            return response()->json(['status' => 'success', 'message' => 'Ticket Status Successfully Updated.']);
         } catch (\Throwable $ex) {
             DB::rollBack();
-            return response()->json(['status' => 'error', 'msg' => 'Ticket Status Failed Updated.', 'data' => $ex->getMessage()], 500);
+            return response()->json(['status' => 'error', 'message' => 'Ticket Status Failed Updated.', 'data' => $ex->getMessage()], 500);
         }
     }
 }
