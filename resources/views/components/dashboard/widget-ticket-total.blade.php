@@ -19,7 +19,7 @@
                     <h2 class="h6 text-gray-400 mb-0">{{ $label }}</h2>
                     <h3 class="fw-extrabold mb-2">{{ number_format($value) }}</h3>
                 </div>
-                @if (!is_null($value_compare))
+                @if (!empty($value_compare))
                     <div class="small d-flex mt-1">
                         <div class="me-1">Since Last mos</div>
                         <span class="d-flex align-items-center">

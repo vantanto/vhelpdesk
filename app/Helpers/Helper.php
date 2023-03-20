@@ -10,7 +10,7 @@ class Helper
 
     public static function fileStore($file, $filePath, $fileName = null, $disk = 'public')
     {
-        if (!is_null($file)) {
+        if (!empty($file)) {
             $fileName = ($fileName ?? date('YmdHis')) . '.' . $file->extension();
             $fullPath = $filePath . $fileName;
             Storage::disk($disk)->put($fullPath, file_get_contents($file));
@@ -22,14 +22,14 @@ class Helper
 
     public static function fileDelete($fullPath, $disk = 'public')
     {
-        if (!is_null($fullPath)) {
+        if (!empty($fullPath)) {
             Storage::disk($disk)->delete($fullPath);
         }
     }
 
     public static function fileUpdate($oldFullPath, $file, $filePath, $filename = null, $disk = 'public')
     {
-        if (!is_null($file)) {
+        if (!empty($file)) {
             self::fileDelete($oldFullPath);
             return self::fileStore($file, $filePath, $filename, $disk);
         } else {

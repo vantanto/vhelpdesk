@@ -17,7 +17,7 @@
             </svg>
         </a>
     @endif
-    @if(!is_null($delete_name) && !is_null($delete_value))
+    @if(!empty($delete_name) && !empty($delete_value))
         <button type="button" class="input-group-text btn btn-gray-200" onclick="fileDelete(this)">
             <svg class="icon icon-xs text-gray-600" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
                 <path clip-rule="evenodd" fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.28 7.22a.75.75 0 00-1.06 1.06L8.94 10l-1.72 1.72a.75.75 0 101.06 1.06L10 11.06l1.72 1.72a.75.75 0 101.06-1.06L11.06 10l1.72-1.72a.75.75 0 00-1.06-1.06L10 8.94 8.28 7.22z"></path>
@@ -28,7 +28,7 @@
 
 @once
     @push('scripts')
-        @if(!is_null($delete_name) && !is_null($delete_value)) 
+        @if(!empty($delete_name) && !empty($delete_value)) 
             <script>
                 function fileDelete(element) {
                     $(`<input type="hidden" name="{{ $delete_name }}" value="{{ $delete_value }}">`).insertAfter($(element).closest('.input-group'));

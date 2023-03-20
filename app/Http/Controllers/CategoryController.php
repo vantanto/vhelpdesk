@@ -14,7 +14,7 @@ class CategoryController extends Controller
         $pshow = is_numeric($request->pshow) ? $request->pshow : Helper::$PageItemShows[0];
         $categories = Category::orderBy('id', 'asc');
 
-        if (!is_null($request->search)) {
+        if (!empty($request->search)) {
             $categories->where(
                 fn ($query) =>
                 $query->where('name', 'like', '%'.$request->search.'%')
