@@ -14,7 +14,7 @@ class DepartmentController extends Controller
         $pshow = is_numeric($request->pshow) ? $request->pshow : Helper::$PageItemShows[0];
         $departments = Department::orderBy('id', 'asc');
 
-        if ($request->search != null) {
+        if (!is_null($request->search)) {
             $departments->where(
                 fn ($query) =>
                 $query->where('name', 'like', '%'.$request->search.'%')

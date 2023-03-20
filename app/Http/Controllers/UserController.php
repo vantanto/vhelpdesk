@@ -18,14 +18,14 @@ class UserController extends Controller
         $users = User::with('departments')->orderBy('id', 'asc');
         $departments = Department::all();
 
-        if ($request->search != null) {
+        if (!is_null($request->search)) {
             $users->where(
                 fn ($query) =>
                 $query->where('name', 'like', '%' . $request->search . '%')
                     ->orWhere('email', 'like', '%' . $request->search . '%')
             );
         }
-        if ($request->department != null) {
+        if (!is_null($request->department)) {
             $users->whereHas(
                 'departments',
                 fn ($query) => $query->where('departments.id', $request->department)
@@ -62,7 +62,7 @@ class UserController extends Controller
             $user->password = Hash::make($request->password);
             $user->save();
 
-            if ($request->departments != null) $user->departments()->attach($request->departments);
+            if (!is_null($request->departments)) $user->departments()->attach($request->departments);
 
             DB::commit();
             return response()->json(['status' => 'success', 'message' => 'User Successfully Created.']);
@@ -103,7 +103,7 @@ class UserController extends Controller
         DB::beginTransaction();
         try {
             $user->fill($request->only('name'));
-            if ($request->password != null) $user->password = Hash::make($request->password);
+            if (!is_null($request->password)) $user->password = Hash::make($request->password);
             $user->save();
 
             $user->departments()->sync($request->departments);

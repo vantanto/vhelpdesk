@@ -74,7 +74,7 @@ class TicketController extends Controller
             $ticket->user_id = Auth::user()->id;
             $ticket->save();
 
-            if ($request->departments != null) $ticket->departments()->attach($request->departments);
+            if (!is_null($request->departments)) $ticket->departments()->attach($request->departments);
 
             $ticket->files = Helper::fileStoreMultiple($request->file('files'), Ticket::$FilePath . $ticket->id . '/');
             $ticket->code = $ticket->generateCode();

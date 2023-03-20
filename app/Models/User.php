@@ -56,9 +56,9 @@ class User extends Authenticatable
     protected function avatarFullUrl(): Attribute
     {
         return new Attribute(
-            get: fn () => $this->avatar != null
-                ? Storage::disk('public')->url($this->avatar)
-                : asset('dist/images/avatar.png')
+            get: fn () => is_null($this->avatar)
+                ? asset('dist/images/avatar.png')
+                : Storage::disk('public')->url($this->avatar)
         );
     }
 
