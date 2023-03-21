@@ -53,12 +53,16 @@ class DashboardController extends Controller
                         ->orWhere('description', 'like', '%' . $search . '%')
                         ->orWhere('priority', 'like', '%' . $search . '%')
                         ->orWhere('status', 'like', '%' . $search . '%')
-                        ->orWhereHas('category', fn ($query) => $query->where('name', 'like', '%' . $search . '%'))
+                        ->orWhereHas('category', fn ($query2) => $query2->where('name', 'like', '%' . $search . '%'))
                 );
 
             $menuData['department'] = Department::where('name', 'like', '%' . $search . '%');
-            $menuData['user'] = User::where('name', 'like', '%' . $search . '%')
-                ->orWhere('email', 'like', '%' . $search . '%');
+            $menuData['user'] = User::query()
+                ->where(
+                    fn ($query) =>
+                    $query->where('name', 'like', '%' . $search . '%')
+                        ->orWhere('email', 'like', '%' . $search . '%')
+                );
             $menuData['category'] = Category::where('name', 'like', '%' . $search . '%');
 
             foreach ($menuData as $menu => $data) {
