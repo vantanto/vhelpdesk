@@ -30,7 +30,7 @@
     @if($count > 0)
         <div class="row">
             @foreach ($menuData as $menu=>$data)
-                    @if(count($data) > 0)
+                @if(count($data) > 0)
                     <div class="col-12">
                         <div id="search-{{ $menu }}" class="card card-body border-0 shadow p-3 mb-3">
                             <h2 class="h5 mb-3">{{ ucwords(str_replace('_', ' ', $menu)) }}</h2>
@@ -68,8 +68,7 @@
                     $('.stitle, .sdescription').unmark({
                         done: function() {
                             if (switch_mark == true) {
-                                $('.stitle, .sdescription').mark("{{ Request::input('search') ?? '' }}", {
-                                });
+                                $('.stitle, .sdescription').mark("{{ Request::input('search') ?? '' }}");
                             }
                         }
                     });
