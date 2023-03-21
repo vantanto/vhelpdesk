@@ -21,6 +21,20 @@ class TicketController extends Controller
 
         $tickets = Ticket::orderBy('id', 'desc');
 
+        if (!empty($request->search)) {
+            $tickets->where(
+                fn ($query) =>
+                $query->where('code', 'like', '%' . $request->search . '%')
+                    ->orWhere('title', 'like', '%' . $request->search . '%')
+            );
+        }
+        if (!empty($request->priority)) {
+            $tickets->where('priority', $request->priority);
+        }
+        if (!empty($request->status)) {
+            $tickets->where('status', $request->status);
+        }
+
         if ($type == 'requested') {
             $tickets->user();
         } elseif ($type == 'assigned') {

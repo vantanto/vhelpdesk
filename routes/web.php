@@ -22,6 +22,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/search', [DashboardController::class, 'search'])->name('search');
 
     Route::group(['prefix' => 'categories'], function() {
         Route::get('/', [CategoryController::class, 'index'])

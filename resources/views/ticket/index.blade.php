@@ -7,6 +7,35 @@
         </a>
     </div>
 
+    <x-form-filter search_placeholder="Search Code, Title">
+        <x-slot name="slot_top">
+            <div class="col-md-3 mb-3">
+                <label>Priority</label>
+                <select name="priority" class="form-select">
+                    <option value="" selected>All Priority</option>
+                    @foreach (\App\Models\Ticket::$Priorities as $priority)
+                        <option value="{{ $priority }}"
+                            @selected($priority == Request::input('priority')) >
+                            {{ ucwords($priority) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="col-md-3 mb-3">
+                <label>Status</label>
+                <select name="status" class="form-select">
+                    <option value="" selected>All Status</option>
+                    @foreach (\App\Models\Ticket::$Status as $status)
+                        <option value="{{ $status }}"
+                            @selected($status == Request::input('status')) >
+                            {{ ucwords(str_replace('_', ' ', $status)) }}
+                        </option>
+                    @endforeach
+                </select>
+            </div>
+        </x-slot>
+    </x-form-filter>
+
     <div class="card border-0 shadow">
         <div class="card-body">
             <div class="nav-wrapper position-relative">

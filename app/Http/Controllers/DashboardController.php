@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use App\Models\Department;
 use App\Models\Ticket;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -33,5 +35,34 @@ class DashboardController extends Controller
             ->get();
 
         return view('dashboard', compact('ticketAssigneds', 'ticketStatuses', 'depTicketStatus', 'deptTickets'));
+    }
+
+    public function search(Request $request)
+    {
+        $search = $request->search;
+        $count = 0;
+        $menuData = [];
+
+        if (!empty($search)) {
+            $menuData['ticket'] = Ticket::with('category')
+                ->where('code', 'like', '%'.$search.'%')
+                ->orWhere('title', 'like', '%'.$search.'%')
+                ->orWhere('description', 'like', '%'.$search.'%')
+                ->orWhere('priority', 'like', '%'.$search.'%')
+                ->orWhere('status', 'like', '%'.$search.'%')
+                ->orWhereHas('category', fn($query) => $query->where('name', 'like', '%'.$search.'%'));
+
+            $menuData['department'] = Department::where('name', 'like', '%'.$search.'%');
+            $menuData['user'] = User::where('name', 'like', '%'.$search.'%')
+                ->orWhere('email', 'like', '%'.$search.'%');
+            $menuData['category'] = Category::where('name', 'like', '%'.$search.'%');
+
+            foreach ($menuData as $menu=>$data) {
+                $menuData[$menu] = $data->paginate(2, ['*'], $menu);
+                $count += $menuData[$menu]->total();
+            }
+        }
+
+        return view('search', compact('count', 'menuData'));
     }
 }
