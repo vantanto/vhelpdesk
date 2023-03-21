@@ -45,19 +45,23 @@ class DashboardController extends Controller
 
         if (!empty($search)) {
             $menuData['ticket'] = Ticket::with('category')
-                ->where('code', 'like', '%'.$search.'%')
-                ->orWhere('title', 'like', '%'.$search.'%')
-                ->orWhere('description', 'like', '%'.$search.'%')
-                ->orWhere('priority', 'like', '%'.$search.'%')
-                ->orWhere('status', 'like', '%'.$search.'%')
-                ->orWhereHas('category', fn($query) => $query->where('name', 'like', '%'.$search.'%'));
+                ->detail()
+                ->where(
+                    fn ($query) =>
+                    $query->where('code', 'like', '%' . $search . '%')
+                        ->orWhere('title', 'like', '%' . $search . '%')
+                        ->orWhere('description', 'like', '%' . $search . '%')
+                        ->orWhere('priority', 'like', '%' . $search . '%')
+                        ->orWhere('status', 'like', '%' . $search . '%')
+                        ->orWhereHas('category', fn ($query) => $query->where('name', 'like', '%' . $search . '%'))
+                );
 
-            $menuData['department'] = Department::where('name', 'like', '%'.$search.'%');
-            $menuData['user'] = User::where('name', 'like', '%'.$search.'%')
-                ->orWhere('email', 'like', '%'.$search.'%');
-            $menuData['category'] = Category::where('name', 'like', '%'.$search.'%');
+            $menuData['department'] = Department::where('name', 'like', '%' . $search . '%');
+            $menuData['user'] = User::where('name', 'like', '%' . $search . '%')
+                ->orWhere('email', 'like', '%' . $search . '%');
+            $menuData['category'] = Category::where('name', 'like', '%' . $search . '%');
 
-            foreach ($menuData as $menu=>$data) {
+            foreach ($menuData as $menu => $data) {
                 $menuData[$menu] = $data->paginate(5, ['*'], $menu);
                 $count += $menuData[$menu]->total();
             }
