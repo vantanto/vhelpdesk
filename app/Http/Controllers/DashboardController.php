@@ -58,7 +58,7 @@ class DashboardController extends Controller
             $menuData['category'] = Category::where('name', 'like', '%'.$search.'%');
 
             foreach ($menuData as $menu=>$data) {
-                $menuData[$menu] = $data->paginate(2, ['*'], $menu);
+                $menuData[$menu] = $data->paginate(5, ['*'], $menu);
                 $count += $menuData[$menu]->total();
             }
         }
