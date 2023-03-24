@@ -41,15 +41,19 @@ class TicketController extends Controller
             $tickets->with(['user'])
                 ->whereHas(
                     'assigneds',
-                    fn ($query) => $query->where('user_id', Auth::user()->id)
+                    fn ($q) => $q->when(!Auth::user()->is_sadmin, 
+                        fn ($query) => $query->where('user_id', Auth::user()->id)
+                    )
                 );
         } elseif ($type == 'unassigned') {
             $tickets->with(['user'])
                 ->doesntHave('assigneds')
-                ->where('user_id', '!=', Auth::user()->id)
-                ->whereHas(
-                    'departments',
-                    fn ($query) => $query->whereIn('id', Auth::user()->departments->pluck('id')->toArray())
+                ->when(!Auth::user()->is_sadmin, fn ($q) =>
+                    $q->where('user_id', '!=', Auth::user()->id)
+                        ->whereHas(
+                            'departments',
+                            fn ($query) => $query->whereIn('id', Auth::user()->departments->pluck('id')->toArray())
+                        )
                 );
         }
 
@@ -153,7 +157,6 @@ class TicketController extends Controller
         try {
             $ticket->fill($request->only('title', 'description', 'priority', 'due_date'));
             $ticket->category_id = $request->category;
-            $ticket->user_id = Auth::user()->id;
             $ticket->save();
 
             $ticket->departments()->sync($request->departments);

@@ -27,6 +27,18 @@
                     <x-invalid-feedback />
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="role">Role</label>
+                    <select name="role" class="form-select" required>
+                        <option value="" selected>Choose Role</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                    <x-invalid-feedback />
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="department">Department <small class="text-muted">(Optional) (Multiple)</small></label>
                 <select id="department" name="departments[]" class="form-select" multiple style="width: 100%">

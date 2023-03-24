@@ -12,7 +12,7 @@ class DepartmentsSeeder extends Seeder
      */
     public function run(): void
     {
-        $departments = ['Admin', 'Design', 'IT'];
+        $departments = ['Accounting', 'Design', 'IT'];
         foreach ($departments as $department) {
             \App\Models\Department::create([
                 'name' => $department

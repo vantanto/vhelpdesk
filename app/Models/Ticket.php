@@ -49,16 +49,20 @@ class Ticket extends Model
 
     public function scopeUser(Builder $query): void
     {
-        $query->where('tickets.user_id', Auth::user()->id);
+        if (!Auth::user()->is_sadmin) {
+            $query->where('tickets.user_id', Auth::user()->id);
+        }
     }
 
     public function scopeDetail(Builder $query): void
     {
-        $query->where(
-            fn ($query2) => $query2
-                ->whereHas('departments', fn ($query3) => $query3->whereIn('id', Auth::user()->departments->pluck('id')->toArray()))
-                ->orWhere('tickets.user_id', Auth::user()->id)
-        );
+        if (Auth::user()->is_sadmin) {
+            $query->where(
+                fn ($query2) => $query2
+                    ->whereHas('departments', fn ($query3) => $query3->whereIn('id', Auth::user()->departments->pluck('id')->toArray()))
+                    ->orWhere('tickets.user_id', Auth::user()->id)
+            );
+        }
     }
 
     public function assigneds()

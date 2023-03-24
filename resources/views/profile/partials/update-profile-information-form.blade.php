@@ -24,11 +24,23 @@
             </div>
 
             <div class="mb-3 row">
-                <label class="col-md-3 col-form-label" for="email">Email</label>
+                <label class="col-md-3 col-form-label">Email</label>
                 <div class="col-md-9">
-                    <input type="email" id="email" class="form-control-plaintext" readonly placeholder="Email"
-                        value="{{ old('email', $user->email) }}">
-                    <x-input-error :messages="$errors->get('email')" />
+                    <label class="form-control-plaintext">{{ $user->email }}</label>
+                </div>
+            </div>
+
+            <div class="mb-3 row">
+                <label class="col-md-3 col-form-label">Role</label>
+                <div class="col-md-9">
+                    <label class="form-control-plaintext">{{ $user->role_name }}</label>
+                </div>
+            </div>
+            
+            <div class="mb-3 row">
+                <label class="col-md-3 col-form-label">Department</label>
+                <div class="col-md-9">
+                    <label class="form-control-plaintext">{{ implode(', ', $user->departments->pluck('name')->toArray()) }}</label>
                 </div>
             </div>
 

@@ -11,10 +11,11 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+    use HasApiTokens, HasFactory, HasRoles, Notifiable, SoftDeletes;
 
     public static $ImagePath = 'images/avatar/';
 
@@ -59,6 +60,32 @@ class User extends Authenticatable
             get: fn () => is_null($this->avatar)
                 ? asset('dist/images/avatar.png')
                 : Storage::disk('public')->url($this->avatar)
+        );
+    }
+
+    protected function roleName(): Attribute
+    {
+        return new Attribute(
+            get: fn () => !empty($this->roles[0])
+                ? $this->roles[0]->name
+                : null
+        );
+    }
+
+
+    protected function roleId(): Attribute
+    {
+        return new Attribute(
+            get: fn () => !empty($this->roles[0])
+                ? $this->roles[0]->id
+                : null
+        );
+    }
+
+    protected function isSadmin(): Attribute 
+    {
+        return new Attribute(
+            get: fn () => $this->role_id === 1
         );
     }
 

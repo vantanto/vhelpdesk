@@ -14,14 +14,18 @@ class DatabaseSeeder extends Seeder
     {
         // \App\Models\User::factory(10)->create();
 
-        \App\Models\User::factory()->create([
-            'name' => 'Test User',
-            'email' => 'test@example.com',
+        $user = \App\Models\User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@example.com',
         ]);
 
         $this->call([
+            RolePermissionsSeeder::class,
             DepartmentsSeeder::class,
             CategoriesSeeder::class,
         ]);
+
+        $user->assignRole(\Spatie\Permission\Models\Role::find(1));
+        $user->departments()->sync(\App\Models\Department::all()->pluck('id')->toArray());
     }
 }

@@ -2,7 +2,6 @@
 
 namespace App\View\Components\Dashboard;
 
-use App\Models\DepartmentUser;
 use App\Models\Ticket;
 use Carbon\Carbon;
 use Closure;
@@ -30,9 +29,14 @@ class TicketTotal extends Component
         $this->dateStartLastM = Carbon::now()->subMonth()->endOfMonth();
 
         $this->tickets['requested'] = Ticket::where('status', '!=', Ticket::$Status[3])
-            ->where('user_id', Auth::user()->id);
+            ->user();
         $this->tickets['assigned'] = Ticket::where('status', '!=', Ticket::$Status[3])
-            ->whereHas('assigneds', fn ($query) => $query->where('user_id', Auth::user()->id));
+            ->whereHas(
+                'assigneds', 
+                fn ($q) => $q->when(!Auth::user()->is_sadmin,
+                    fn ($query) => $query->where('user_id', Auth::user()->id)
+                )
+            );
 
         // Department
         $this->tickets['requested_department'] = Ticket::where('status', '!=', Ticket::$Status[3])

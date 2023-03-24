@@ -16,7 +16,9 @@ class DashboardController extends Controller
         $ticketAssigneds = Ticket::with(['user'])
             ->whereHas(
                 'assigneds',
-                fn ($query) => $query->where('user_id', Auth::user()->id)
+                fn ($q) => $q->when(!Auth::user()->is_sadmin, 
+                    fn ($query) => $query->where('user_id', Auth::user()->id)
+                )
             )
             ->orderBy('id', 'desc')
             ->limit(10)

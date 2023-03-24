@@ -27,12 +27,27 @@
                     <x-invalid-feedback />
                 </div>
             </div>
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label for="role">Role</label>
+                    <select name="role" class="form-select" required>
+                        <option value="" selected>Choose Role</option>
+                        @foreach ($roles as $role)
+                            <option value="{{ $role->id }}"
+                                @selected($role->name == $user->role_name)>
+                                {{ $role->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                    <x-invalid-feedback />
+                </div>
+            </div>
             <div class="mb-3">
                 <label for="department">Department <small class="text-muted">(Optional) (Multiple)</small></label>
                 <select id="department" name="departments[]" class="form-select" multiple style="width: 100%">
                     @foreach ($departments as $department)
                         <option value="{{ $department->id }}"
-                            @if(in_array($department->id, $user->departments->pluck('id')->toArray())) selected @endif>
+                            @selected(in_array($department->id, $user->departments->pluck('id')->toArray()))>
                             {{ $department->name }}
                         </option>
                     @endforeach
