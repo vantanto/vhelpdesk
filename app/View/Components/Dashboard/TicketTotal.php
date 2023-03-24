@@ -26,7 +26,7 @@ class TicketTotal extends Component
         $this->dateStart = Carbon::now()->startOfMonth();
         $this->dateEnd = Carbon::now()->endOfDay();
         $this->dateStartLastM = Carbon::now()->subMonth()->startOfMonth();
-        $this->dateStartLastM = Carbon::now()->subMonth()->endOfMonth();
+        $this->dateEndLastM = Carbon::now()->subMonth()->endOfMonth();
 
         $this->tickets['requested'] = Ticket::where('status', '!=', Ticket::$Status[3])
             ->user();
@@ -55,7 +55,7 @@ class TicketTotal extends Component
                 ->count();
 
             $this->tickets[$idx . '_lastmonth'] = (clone $ticket)
-                ->whereBetween('created_at', [$this->dateStartLastM, $this->dateStartLastM])
+                ->whereBetween('created_at', [$this->dateStartLastM, $this->dateEndLastM])
                 ->count();
         }
     }
